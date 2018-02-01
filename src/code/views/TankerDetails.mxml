@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" height="100%" title="Tanker Details"
+	creationComplete="onCreationComplete(event)"
+	xmlns:maps="com.google.maps.*">
+	<mx:Script>
+		<![CDATA[
+			import code.constants.ApplicationConstants;
+			import code.model.TankerTestModelLocator;
+			
+			import com.google.maps.LatLng;
+			import com.google.maps.MapEvent;
+			import com.google.maps.MapMouseEvent;
+			import com.google.maps.MapType;
+			import com.google.maps.overlays.Marker;
+			
+			import mx.binding.utils.ChangeWatcher;
+			import mx.events.FlexEvent;
+			import mx.events.PropertyChangeEvent;
+			//
+			[Bindable]
+			private var modelLocator:TankerTestModelLocator = TankerTestModelLocator.instance();
+			//
+			private var pPoint:LatLng;
+			private var pMarker:Marker;
+			//
+			
+			protected function onCreationComplete(event:FlexEvent):void
+			{
+				// as directly cannot bind latitiude longitude to google map, manual binding
+				ChangeWatcher.watch(modelLocator,"selectedTanker",onSelectedTankerChange);
+			}
+
+			private function onSelectedTankerChange(event:PropertyChangeEvent):void
+			{
+				// clear marker
+				if(pMarker)
+				{
+					tankerLocationMap.removeOverlay(pMarker);
+				}
+				pPoint = new LatLng(modelLocator.selectedTanker.tankerLatitude,modelLocator.selectedTanker.tankerLongitude);
+				tankerLocationMap.setCenter(pPoint,14,MapType.NORMAL_MAP_TYPE);
+				pMarker = new Marker(pPoint);
+				tankerLocationMap.addOverlay(pMarker);
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox height="100%" width="100%">
+		<mx:VBox width="100%">
+			<mx:HBox>
+				<mx:Label text="Tanker Code"/>
+				<mx:Label text="{modelLocator.selectedTanker.tankerCode}"/>
+			</mx:HBox>
+			<mx:HBox>
+				<mx:Label text="Carrier Code"/>
+				<mx:Label text="{modelLocator.selectedTanker.tankerCarrierCode}"/>
+			</mx:HBox>
+			<mx:HBox>
+				<mx:Label text="Carrier Name"/>
+				<mx:Label text="{modelLocator.selectedTanker.tankerCarrierName}"/>
+			</mx:HBox>
+			<mx:HBox>
+				<mx:Label text="Tanker Lock"/>
+				<mx:CheckBox selected="{modelLocator.selectedTanker.isTankerLocked}" enabled="false"/>
+			</mx:HBox>
+			<mx:HBox>
+				<mx:Label text="Tanker Active"/>
+				<mx:CheckBox selected="{modelLocator.selectedTanker.isTankerActive}" enabled="false"/>
+			</mx:HBox>
+		</mx:VBox>
+		<maps:Map id="tankerLocationMap"
+			width="900" height="100%"
+			key="ABQIAAAAS91Au4TG9hVpq3xbpgTA3RT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS_QTLAp4gB4J0DmgRzh6L2wKhFAA" />
+		
+	</mx:HBox>
+</mx:Panel>

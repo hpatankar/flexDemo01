@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rds:ServiceLocator xmlns:rds="com.adobe.cairngorm.business.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:HTTPService id="userLoginOnline" url="http://www.xyz.com/cgi-bin/en/login.cgi" resultFormat="e4x"/>
+	<mx:HTTPService id="userLoginOffline" url="assets/xml/login_response.xml" resultFormat="e4x"/>
+	<mx:HTTPService id="tankerDataOnline" url="http://www.xyz.com/cgi-bin/en/atm/tankers.cgi" resultFormat="e4x"/>
+	<mx:HTTPService id="tankerDataOffline" url="assets/xml/tankers.xml"/>
+</rds:ServiceLocator>

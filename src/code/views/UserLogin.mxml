@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import code.business.events.UserLoginClickedEvent;
+			//
+			//
+			private function onUserLoginClicked(aEvent:MouseEvent):void
+			{
+				var event:UserLoginClickedEvent = new UserLoginClickedEvent(tiUserName.text,tiPassword.text);
+				CairngormEventDispatcher.getInstance().dispatchEvent(event);
+			}
+		]]>
+	</mx:Script>
+	<mx:FormHeading label="User login" />
+	<mx:FormItem>
+			<mx:Label text="Username"/>
+			<mx:TextInput id="tiUserName"/>
+	</mx:FormItem>
+	<mx:FormItem>
+		<mx:Label text="Password"/>
+		<mx:TextInput id="tiPassword" displayAsPassword="true"/>
+	</mx:FormItem>
+	<mx:FormItem>
+		<mx:Button label="login" click="onUserLoginClicked(event)" />
+	</mx:FormItem>
+	<mx:FormItem>
+		<mx:Label text="User name 9999 and password 12345"/>
+	</mx:FormItem>
+</mx:Form>
